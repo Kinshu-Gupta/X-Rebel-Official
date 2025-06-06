@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>X Rebel Gamerz | Login / Signup</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #ff1a3c;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: white;
+      box-shadow: 0 0 10px #ff0033;
+    }
+    button:hover {
+      background: #660000;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔐 Login / Sign Up</h2>
+  
+  <input type="email" id="email" placeholder="Email" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
+
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <p id="message"></p>
+
+  <!-- 🔥 Paste Firebase config below -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function signup() {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      auth.createUserWithEmailAndPassword(email, pass)
+        .then(user => {
+          document.getElementById('message').innerText = "✅ Signup Successful!";
+        })
+        .catch(error => {
+          document.getElementById('message').innerText = "❌ " + error.message;
+        });
+    }
+
+    function login() {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(user => {
+          document.getElementById('message').innerText = "✅ Login Successful!";
+          window.location.href = "dashboard.html"; // You can change this
+        })
+        .catch(error => {
+          document.getElementById('message').innerText = "❌ " + error.message;
+        });
+    }
+  </script>
+</body>
+</html>
