@@ -66,3 +66,48 @@ button:hover {
   background-color: #ff1a1a;
   color: black;
 }
+.search-container {
+  position: relative;
+  display: inline-block;
+}
+
+.search-input {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e63946; /* red color */
+  border-radius: 20px;
+  padding: 0 15px 0 40px;
+  font-size: 16px;
+  outline: none;
+  color: #fff;
+  background: transparent;
+  transition: width 0.4s ease;
+  cursor: pointer;
+}
+
+.search-input::placeholder {
+  color: #e63946;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.search-input:focus {
+  width: 250px;
+  cursor: text;
+}
+
+.search-input:focus::placeholder {
+  opacity: 1;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  fill: #e63946;
+}
+
