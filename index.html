@@ -242,6 +242,29 @@
 </div>
     </div>
   </section>
+	  <!-- 🌟 Earn Coins Section -->
+<section id="earn-coins" style="text-align:center; padding: 20px; background:black; color:red;">
+  <h2>💰 Earn Coins</h2>
+  <p>Click the Linkvertise links below once per day to earn coins!</p>
+  <div>
+    <a href="https://linkvertise.com/example1" class="reward-link" onclick="rewardUser('link1', this)">🔗 Linkvertise Ad 1</a>
+    <a href="https://linkvertise.com/example2" class="reward-link" onclick="rewardUser('link2', this)">🔗 Linkvertise Ad 2</a>
+    <a href="https://linkvertise.com/example3" class="reward-link" onclick="rewardUser('link3', this)">🔗 Linkvertise Ad 3</a>
+  </div>
+  <p style="margin-top:15px;">Your Coins: <span id="coinDisplay">0</span> 🪙</p>
+</section>
+
+<!-- 🛒 Coin Shop Section -->
+<section id="coin-shop" style="text-align:center; padding: 20px; background:#111; color:red;">
+  <h2>🛒 Coin Shop</h2>
+  <p>Spend your coins on cool rewards!</p>
+  <div>
+    <button onclick="buyItem('VIP Rank', 30)">Buy VIP Rank - 30 Coins</button>
+    <button onclick="buyItem('Special Skin', 50)">Buy Special Skin - 50 Coins</button>
+    <button onclick="buyItem('Crate Key', 20)">Buy Crate Key - 20 Coins</button>
+  </div>
+  <p id="shop-message" style="margin-top:15px;"></p>
+</section>
 	 <section id="stats">
     <h2>Top Player of Server</h2>
     <ul>
@@ -317,7 +340,70 @@
     setTimeout(showSlides, 3000); // Change image every 3 seconds
   }
 </script>
+         <script>
+  const coinDisplay = document.getElementById("coinDisplay");
 
+  // Load coins from localStorage
+  let coins = parseInt(localStorage.getItem("coins") || 0);
+  coinDisplay.textContent = coins;
+
+  const todayKey = new Date().toDateString();
+  const totalClickKey = `totalClicks_${todayKey}`;
+  let totalClicks = parseInt(localStorage.getItem(totalClickKey) || 0);
+  const dailyLimit = 50;
+
+  function rewardUser(linkId, element) {
+    const clickKey = `clicked_${linkId}_${todayKey}`;
+    const lastClicked = localStorage.getItem(clickKey);
+
+    if (lastClicked === todayKey) {
+      alert("⛔ You already clicked this link today!");
+      return false;
+    }
+
+    if (totalClicks >= dailyLimit) {
+      alert("🚫 Daily click limit (50) reached. Try again tomorrow!");
+      return false;
+    }
+
+    // Reward coins
+    coins += 10;
+    totalClicks += 1;
+
+    // Save to localStorage
+    localStorage.setItem("coins", coins);
+    localStorage.setItem(clickKey, todayKey);
+    localStorage.setItem(totalClickKey, totalClicks);
+    coinDisplay.textContent = coins;
+
+    // Visual feedback
+    element.classList.add("disabled");
+    element.style.backgroundColor = "gray";
+    alert(`✅ You earned 10 coins! (${totalClicks}/50 clicks used today)`);
+  }
+
+  // Disable links already clicked today
+  document.querySelectorAll(".reward-link").forEach(link => {
+    const id = link.getAttribute("onclick").match(/'(.+?)'/)[1];
+    const clickKey = `clicked_${id}_${todayKey}`;
+    if (localStorage.getItem(clickKey) === todayKey) {
+      link.classList.add("disabled");
+      link.style.backgroundColor = "gray";
+    }
+  });
+
+  // Coin shop logic
+  function buyItem(itemName, cost) {
+    if (coins >= cost) {
+      coins -= cost;
+      localStorage.setItem("coins", coins);
+      coinDisplay.textContent = coins;
+      document.getElementById("shop-message").textContent = `🎉 You bought: ${itemName}`;
+    } else {
+      document.getElementById("shop-message").textContent = "❌ Not enough coins!";
+    }
+  }
+</script>
 
 </body>
 </html>
