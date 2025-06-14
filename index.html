@@ -1,73 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="google-adsense-account" content="ca-pub-7232312699141661">
-  <meta name="342d21e5f8e3db71277c41125e10962ef038235e" content="342d21e5f8e3db71277c41125e10962ef038235e" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>X-Rebel Gamerz - Minecraft Community</title>
-  <!-- Favicon -->
-<link rel="icon" type="image/png" href="https://rebelsmp.fun/images/rebellogo.jpg">
-
-<!-- Optional: Apple & Windows tiles -->
-<link rel="apple-touch-icon" href="https://rebelsmp.fun/images/favicon.png">
-<meta name="msapplication-TileImage" content="https://rebelsmp.fun/favicon.png">
-	  <!-- Website Icon for Social Media and Previews -->
-<meta property="og:title" content="X-Rebel Gamerz Official - Minecraft Community">
-<meta property="og:description" content="Join RebelSMP for an epic Minecraft adventure with PvP, events, clans, and more!">
-<meta property="og:image" content="https://rebelsmp.fun/favicon.png">
-<meta property="og:url" content="https://rebelsmp.fun/">
-<meta name="twitter:card" content="summary_large_image">
-
-<!-- Favicon for browser tab -->
-<link rel="icon" type="image/png" href="https://rebelsmp.fun/images/rebellogo.jpg">
-	
-	<!-- 🍪 Cookie Consent Box -->
-<div id="cookie-box" style="
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  max-width: 400px;
-  margin: auto;
-  background: #1a1a1a;
-  color: white;
-  border: 2px solid #ff1a3c;
-  border-radius: 10px;
-  padding: 20px;
-  z-index: 9999;
-  text-align: center;
-  box-shadow: 0 0 10px #ff1a3c;
-">
-  <p style="margin-bottom: 10px;">
-    We use cookies to enhance your experience on <b>X-Rebel Gamerz</b>. 
-    By using this site, you accept our 
-    <a href="terms.html" style="color: #ff1a3c; text-decoration: underline;">Terms and Conditions</a>.
-  </p>
-  <button onclick="acceptCookies()" style="
-    background: #ff1a3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  ">Accept</button>
-</div>
-
-<script>
-  function acceptCookies() {
-    localStorage.setItem('cookieAccepted', 'yes');
-    document.getElementById('cookie-box').style.display = 'none';
-  }
-
-  window.onload = function () {
-    if (localStorage.getItem('cookieAccepted') !== 'yes') {
-      document.getElementById('cookie-box').style.display = 'block';
-    }
-  }
-</script>
+  <link rel="icon" type="image/png" href="https://rebelsmp.fun/images/rebellogo.jpg">
+  <link rel="apple-touch-icon" href="https://rebelsmp.fun/images/favicon.png">
+  <meta name="msapplication-TileImage" content="https://rebelsmp.fun/favicon.png">
+  <meta property="og:title" content="X-Rebel Gamerz Official - Minecraft Community">
+  <meta property="og:description" content="Join RebelSMP for an epic Minecraft adventure with PvP, events, clans, and more!">
+  <meta property="og:image" content="https://rebelsmp.fun/favicon.png">
+  <meta property="og:url" content="https://rebelsmp.fun/">
+  <meta name="twitter:card" content="summary_large_image">
 
   <style>
     body {
@@ -76,18 +21,15 @@
       background-color: #0a0a0a;
       color: #f0f0f0;
     }
-
     header {
       background-color: #111;
       padding: 30px 20px;
       text-align: center;
     }
-
     header h1 {
       color: #ff0000;
       margin: 0;
     }
-
     nav {
       background-color: #1a1a1a;
       display: flex;
@@ -95,43 +37,36 @@
       align-items: center;
       padding: 10px 20px;
     }
-
     .nav-links {
       display: flex;
       gap: 15px;
     }
-
     .nav-links a {
       color: #f0f0f0;
       text-decoration: none;
       padding: 10px;
     }
-
     .nav-links a:hover {
       background-color: #ff0000;
       color: #fff;
       border-radius: 5px;
     }
-
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
     }
-
     .hamburger div {
       width: 25px;
       height: 3px;
       background-color: #fff;
       margin: 4px 0;
     }
-
     main {
       padding: 20px;
       max-width: 1200px;
       margin: auto;
     }
-
     section {
       margin-bottom: 40px;
       background-color: #1a1a1a;
@@ -139,11 +74,9 @@
       border-left: 5px solid #ff0000;
       border-radius: 8px;
     }
-
     h2 {
       color: #ff0000;
     }
-
     .gallery img {
       width: 100%;
       max-width: 300px;
@@ -151,7 +84,6 @@
       border: 2px solid #ff0000;
       border-radius: 8px;
     }
-
     .btn {
       display: inline-block;
       background-color: #ff0000;
@@ -161,19 +93,15 @@
       text-decoration: none;
       border-radius: 5px;
     }
-
     .btn:hover {
       background-color: #cc0000;
     }
-
     footer {
       background-color: #111;
       text-align: center;
       padding: 15px;
       font-size: 14px;
     }
-
-    /* Responsive */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -181,46 +109,46 @@
         width: 100%;
         background-color: #1a1a1a;
       }
-
       .nav-links.active {
         display: flex;
       }
-
       .hamburger {
         display: flex;
       }
-
       nav {
         flex-direction: column;
         align-items: flex-start;
       }
     }
+    .slide {
+      display: none;
+    }
   </style>
 </head>
 <body>
-    <!-- Old globe hidden -->
-<i class="fa fa-globe" style="display: none;"></i>
 
-<!-- New image added -->
-<img src="images/rebellogo.jpg" alt="Rebel Icon"
-     style="width: 40px; height: 40px; border-radius: 50%; background: white; padding: 5px;">
+<img src="images/rebellogo.jpg" alt="Rebel Icon" style="width: 40px; height: 40px; border-radius: 50%; background: white; padding: 5px;">
 <header>
   <img src="rlogo.png" alt="X-Rebel Gamerz Logo" style="max-width: 150px; height: auto;">
   <h1>X-Rebel Gamerz</h1>
   <p>🔥Official Website of X-Rebel Gamerz🔥</p>
- <div class="search-wrap">
-  <input type="text" class="search-input" placeholder="Search" />
-</div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" placeholder="Search" />
+  </div>
 </header>
-	<div id="loader-wrapper">
-  <div class="loader"></div>
+
+<div id="cookie-box" style="display:none;position:fixed;bottom:20px;left:20px;right:20px;max-width:400px;margin:auto;background:#1a1a1a;color:white;border:2px solid #ff1a3c;border-radius:10px;padding:20px;z-index:9999;text-align:center;box-shadow:0 0 10px #ff1a3c;">
+  <p style="margin-bottom: 10px;">
+    We use cookies to enhance your experience on <b>X-Rebel Gamerz</b>.
+    By using this site, you accept our
+    <a href="terms.html" style="color: #ff1a3c; text-decoration: underline;">Terms and Conditions</a>.
+  </p>
+  <button onclick="acceptCookies()" style="background: #ff1a3c; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">Accept</button>
 </div>
-</div>
+
 <nav>
- <div class="hamburger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
   </div>
   <div class="nav-links" id="navLinks">
     <a href="#about">About</a>
@@ -229,14 +157,16 @@
     <a href="#stats">Stats</a>
     <a href="#news">News</a>
     <a href="#contact">Contact</a>
-    </div>
+  </div>
 </nav>
+
 <main>
-	<section id="about">
+  <section id="about">
     <h2>About X-Rebel Gamerz</h2>
     <p>Welcome to X-Rebel Gamerz! We're a Minecraft community focused on survival, creative building, and hosting fun PvP events. Our mission is to create a safe, fun, and fair environment for all players.</p>
   </section>
-	<section id="servers">
+
+  <section id="servers">
     <h2>Our Server 'Rebel SMP'</h2>
     <ul>
       <li>🧱 Survival World: Balanced, protected, economy enabled</li>
@@ -246,23 +176,17 @@
     <p><strong>Server IP:</strong> <code>play.rebelsmp.fun</code></p>
     <a class="btn" href="#">Join Server</a>
   </section>
-          <section id="gallery">
+
+  <section id="gallery">
     <h2>Gallery</h2>
-    <div class="gallery">
-     <div class="slideshow-container">
-  <div class="slide fade">
-    <img src="images/slide1.png" alt="slide 1">
-  </div>
-  <div class="slide fade">
-    <img src="images/slide4.png" alt="slide 4">
-  </div>
-  <div class="slide fade">
-    <img src="images/slide5.png" alt="slide 5">
-  </div>
-</div>
+    <div class="slideshow-container">
+      <div class="slide fade"><img src="images/slide1.png" alt="slide 1"></div>
+      <div class="slide fade"><img src="images/slide4.png" alt="slide 4"></div>
+      <div class="slide fade"><img src="images/slide5.png" alt="slide 5"></div>
     </div>
   </section>
-	 <section id="stats">
+
+  <section id="stats">
     <h2>Top Player of Server</h2>
     <ul>
       <li>⚒️ FunCascade10079 - Staff</li>
@@ -270,7 +194,8 @@
       <li>⚔️ Wwzop - PvPer</li>
     </ul>
   </section>
-	  <section id="news">
+
+  <section id="news">
     <h2>Latest News</h2>
     <ul>
       <li><strong>June 2025:</strong> New SkyBlock world released!</li>
@@ -278,65 +203,62 @@
       <li><strong>April 2025:</strong> Gallery system updated with player builds.</li>
     </ul>
   </section>
-	 <section id="contact">
+
+  <section id="contact">
     <h2>Connect With Us</h2>
     <p>📧 YouTube: <a href=""></a></p>
     <a class="btn" href="https://discord.gg/mCkZDft42E">💬Join Discord</a>
   </section>
-	 <main>
-  <h1>Download Center</h1>
-  <p>Get everything you need to play on X Rebel Gamerz SMP!</p>
-  <a class="btn" href="https://linkvertise.com/resource-pack">🎨 Resource Pack</a>
-  <a class="btn" href="https://linkvertise.com/mod-pack">⚙️ Mod Pack</a>
-	 </main>
+
+  <section>
+    <h2>Download Center</h2>
+    <p>Get everything you need to play on X Rebel Gamerz SMP!</p>
+    <a class="btn" href="https://linkvertise.com/resource-pack">🎨 Resource Pack</a>
+    <a class="btn" href="https://linkvertise.com/mod-pack">⚙️ Mod Pack</a>
+  </section>
 </main>
+
 <footer>
   &copy; 2025 X-Rebel Gamerz • Made for Minecraft fans • Not affiliated with Mojang Studios or Microsoft.
 </footer>
 
 <script>
-  function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('active');
+  function acceptCookies() {
+    localStorage.setItem('cookieAccepted', 'yes');
+    document.getElementById('cookie-box').style.display = 'none';
   }
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7232312699141661"
-     crossorigin="anonymous"></script>
-      <script type="text/javascript">
-	atOptions = {
-		'key' : 'adb8516ffb9fee58cb412be205f53ec9',
-		'format' : 'iframe',
-		'height' : 300,
-		'width' : 160,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/adb8516ffb9fee58cb412be205f53ec9/invoke.js"></script>
-      <script type='text/javascript' src='//pl26853042.profitableratecpm.com/3a/dd/c6/3addc6d12e5758244fde18846d374644.js'></script>
-	    <script type='text/javascript' src='//pl26853090.profitableratecpm.com/8a/76/72/8a767208a021cac961d24f5b2300ca39.js'></script>
-	      <script async="async" data-cfasync="false" src="//pl26855004.profitableratecpm.com/c36c3126ada5bc722c70dfe6018edd30/invoke.js"></script>
-<div id="container-c36c3126ada5bc722c70dfe6018edd30"></div>
-	<script>
-  // Wait for page to fully load
+  window.onload = function () {
+    if (localStorage.getItem('cookieAccepted') !== 'yes') {
+      document.getElementById('cookie-box').style.display = 'block';
+    }
+  }
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
   window.addEventListener("load", function () {
     const loader = document.getElementById("loader-wrapper");
-    loader.style.display = "none";
+    if(loader) loader.style.display = "none";
   });
-</script>
-	<script>
   let slideIndex = 0;
-  showSlides();
-
   function showSlides() {
     let slides = document.getElementsByClassName("slide");
     for (let i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
     }
     slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}
+    if (slideIndex > slides.length) {slideIndex = 1;}
     slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 3000); // Change image every 3 seconds
+    setTimeout(showSlides, 3000);
   }
+  showSlides();
 </script>
+
+<!-- Ad Scripts -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7232312699141661" crossorigin="anonymous"></script>
+<script type='text/javascript' src='//pl26853042.profitableratecpm.com/3a/dd/c6/3addc6d12e5758244fde18846d374644.js'></script>
+<script type='text/javascript' src='//pl26853090.profitableratecpm.com/8a/76/72/8a767208a021cac961d24f5b2300ca39.js'></script>
+<script async="async" data-cfasync="false" src="//pl26855004.profitableratecpm.com/c36c3126ada5bc722c70dfe6018edd30/invoke.js"></script>
+<div id="container-c36c3126ada5bc722c70dfe6018edd30"></div>
 
 </body>
 </html>
