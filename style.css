@@ -132,23 +132,23 @@ button:hover {
 
 /* Slideshow container */
 .slideshow-container {
-  position: relative;
-  max-width: 90%;
-  margin: 20px auto;
-  border: 3px solid #ff1a1a;
-  border-radius: 10px;
-  overflow: hidden;
+  text-align: center;
+  padding: 20px 0;
 }
 
-/* Hide all slides by default */
-.slide {
-  display: none;
-}
-
-.slide img {
-  width: 100%;
+.slideshow-container img {
+  max-width: 100%;
+  width: 300px;
   height: auto;
-  border-radius: 5px;
+  border: 3px solid #ff0000;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ff0000;
+}
+.slideshow-container img {
+  max-width: 100%;
+  width: 300px;
+  height: 180px; /* Adjust height */
+  object-fit: cover;
 }
 
 /* Fade animation */
