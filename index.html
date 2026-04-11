@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>REBEL SMP – Official Minecraft Server</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+/* ===================== RESET & BASE ===================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#060000;
+  color:#f0e0e0;
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0a0000}
+::-webkit-scrollbar-thumb{background:#8b0000;border-radius:4px}
+
+:root{
+  --red:#cc0000;
+  --blood:#8b0000;
+  --deep:#4a0000;
+  --dark:#060000;
+  --ember:#ff4400;
+  --gold:#ffd700;
+  --silver:#c0c0c0;
+  --bronze:#cd7f32;
+  --discord:#5865f2;
+  --light:#f0e0e0;
+  --muted:#887777;
+  --border:rgba(139,0,0,0.25);
+}
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes gridScroll{to{background-position:0 50px}}
+@keyframes flicker{0%,93%,100%{opacity:1}95%{opacity:.4}97%{opacity:.85}99%{opacity:.3}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(204,0,0,.4)}70%{box-shadow:0 0 0 8px transparent}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===================== NAVBAR ===================== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(12px,4vw,48px);
+  background:rgba(3,0,0,.96);
+  border-bottom:2px solid var(--blood);
+  box-shadow:0 2px 20px rgba(139,0,0,.45);
+  backdrop-filter:blur(10px);
+}
+.nav-logo{display:flex;align-items:center;gap:9px}
+.logo-box{
+  width:36px;height:36px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--red),var(--blood));
+  border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:17px;box-shadow:0 0 10px rgba(204,0,0,.4);
+}
+.logo-txt{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;letter-spacing:2px;color:var(--light)}
+.logo-txt em{color:var(--red);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{
+  color:#888;font-weight:600;font-size:.75rem;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 9px;border-radius:4px;
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--light);background:rgba(139,0,0,.15)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--red),var(--blood))!important;
+  color:#fff!important;border-radius:6px!important;
+  padding:7px 15px!important;margin-left:6px;
+  box-shadow:0 0 10px rgba(204,0,0,.35);
+  transition:transform .2s,box-shadow .2s!important;
+}
+.nav-cta:hover{transform:translateY(-1px)!important;box-shadow:0 4px 18px rgba(204,0,0,.6)!important}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;padding:5px;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--red);border-radius:2px;transition:all .25s;
+}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:760px){
+  .hamburger{display:flex}
+  .nav-links{
+    display:none;position:absolute;
+    top:60px;left:0;right:0;
+    flex-direction:column;align-items:stretch;
+    background:rgba(3,0,0,.99);
+    border-bottom:2px solid var(--blood);
+    padding:8px 0;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 20px;border-radius:0;font-size:.85rem}
+  .nav-cta{margin:10px 16px 6px!important;border-radius:6px!important;text-align:center}
+}
+
+/* ===================== HERO ===================== */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;
+  padding:80px 20px 60px;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 30%,rgba(139,0,0,.32) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 35% at 15% 75%,rgba(204,0,0,.09) 0%,transparent 50%),
+    linear-gradient(180deg,#040000 0%,#110000 50%,#050000 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:1;
+  background-image:
+    linear-gradient(rgba(139,0,0,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(139,0,0,.04) 1px,transparent 1px);
+  background-size:50px 50px;
+  animation:gridScroll 20s linear infinite;
+}
+.hero-content{position:relative;z-index:2;max-width:820px;width:100%}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(139,0,0,.15);border:1px solid rgba(204,0,0,.28);
+  border-radius:30px;padding:5px 16px;
+  font-family:'Orbitron',sans-serif;font-size:.62rem;letter-spacing:3px;
+  text-transform:uppercase;color:#ff8888;margin-bottom:22px;
+  animation:fadeDown .6s ease both;
+}
+.badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#00ff88;box-shadow:0 0 5px #00ff88;
+  flex-shrink:0;animation:blink 1.5s infinite;
+}
+
+.hero-title{
+  font-family:'Cinzel',serif;font-weight:900;
+  font-size:clamp(2.8rem,11vw,8rem);
+  line-height:.9;margin-bottom:12px;
+  animation:fadeDown .7s .1s both;
+}
+.title-rebel{display:block;color:var(--light)}
+.title-smp{
+  display:block;color:var(--red);
+  text-shadow:0 0 24px rgba(204,0,0,.65),0 0 50px rgba(139,0,0,.35);
+  animation:flicker 7s 2s infinite;
+}
+.hero-tagline{
+  font-size:clamp(.75rem,2vw,.95rem);
+  color:#553333;letter-spacing:5px;text-transform:uppercase;
+  margin-bottom:34px;animation:fadeDown .8s .18s both;
+}
+
+.hero-pills{
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:24px;animation:fadeUp .8s .22s both;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(139,0,0,.25);
+  border-radius:20px;padding:5px 13px;
+  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:1px;color:#777;
+}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:#333;flex-shrink:0}
+.pill.live .pill-dot{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:blink 1.8s infinite}
+.pill strong{color:var(--light)}
+
+.hero-ip{
+  display:inline-flex;align-items:center;
+  border:1px solid var(--blood);border-radius:9px;overflow:hidden;
+  margin-bottom:30px;animation:fadeUp .8s .28s both;
+  box-shadow:0 0 22px rgba(139,0,0,.28);
+}
+.ip-label{
+  background:var(--blood);color:#fff;
+  padding:11px 14px;font-family:'Orbitron',sans-serif;
+  font-size:.56rem;letter-spacing:2px;white-space:nowrap;font-weight:700;
+}
+.ip-val{
+  background:rgba(255,255,255,.03);color:var(--light);
+  padding:11px 16px;font-family:'Orbitron',sans-serif;
+  font-size:clamp(.6rem,2.5vw,.88rem);letter-spacing:1.5px;
+  cursor:pointer;border:none;
+  display:flex;align-items:center;gap:7px;
+  transition:background .2s;
+}
+.ip-val:hover{background:rgba(204,0,0,.12)}
+.ip-port{
+  background:rgba(255,255,255,.02);color:#555;
+  padding:11px 13px;font-family:'Orbitron',sans-serif;font-size:.6rem;
+  border-left:1px solid rgba(139,0,0,.25);white-space:nowrap;
+}
+
+.hero-btns{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .8s .34s both;
+}
+.btn-red{
+  background:linear-gradient(135deg,var(--red),var(--blood));
+  color:#fff;padding:12px 26px;border-radius:8px;
+  font-weight:700;font-size:.88rem;letter-spacing:2px;text-transform:uppercase;
+  box-shadow:0 0 16px rgba(204,0,0,.38);
+  transition:transform .2s,box-shadow .2s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 5px 22px rgba(204,0,0,.65)}
+.btn-outline{
+  background:transparent;color:var(--light);
+  padding:11px 26px;border-radius:8px;
+  font-weight:700;font-size:.88rem;letter-spacing:2px;text-transform:uppercase;
+  border:2px solid rgba(139,0,0,.38);
+  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-outline:hover{background:rgba(139,0,0,.14);border-color:var(--red);transform:translateY(-2px)}
+
+@media(max-width:480px){
+  .hero-ip{flex-wrap:wrap;justify-content:center}
+  .ip-port{border-left:none;border-top:1px solid rgba(139,0,0,.25);width:100%;text-align:center}
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-red,.btn-outline{width:100%;justify-content:center;max-width:280px}
+}
+
+/* ===================== SECTIONS SHARED ===================== */
+section{position:relative;z-index:1;padding:clamp(50px,7vw,90px) 0}
+.container{max-width:1140px;margin:0 auto;padding:0 clamp(14px,4vw,32px)}
+
+.sec-header{text-align:center;margin-bottom:clamp(32px,5vw,55px)}
+.sec-tag{
+  display:inline-block;font-family:'Orbitron',sans-serif;
+  font-size:.62rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--red);margin-bottom:9px;
+}
+.sec-title{
+  font-family:'Cinzel',serif;font-weight:900;
+  font-size:clamp(1.4rem,3.5vw,2.4rem);color:var(--light);
+  line-height:1.2;margin-bottom:11px;
+}
+.sec-title span{color:var(--red)}
+.sec-div{
+  width:60px;height:3px;margin:0 auto;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:none}
+
+/* ===================== ABOUT ===================== */
+#about{background:linear-gradient(180deg,#060000 0%,#0c0000 50%,#060000 100%)}
+
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,55px);align-items:start}
+@media(max-width:700px){.about-wrap{grid-template-columns:1fr}}
+
+.about-text h3{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--red);margin-bottom:10px}
+.about-text p{color:#887777;line-height:1.8;font-size:.95rem;margin-bottom:11px}
+.about-text p strong{color:var(--light)}
+
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+@media(max-width:360px){.feats{grid-template-columns:1fr}}
+.feat{display:flex;align-items:center;gap:8px;font-size:.86rem;color:#776666}
+.feat-ico{
+  width:28px;height:28px;flex-shrink:0;
+  background:rgba(139,0,0,.16);border:1px solid rgba(139,0,0,.28);
+  border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.82rem;
+}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.s-card{
+  background:linear-gradient(140deg,rgba(139,0,0,.11),rgba(60,0,0,.07));
+  border:1px solid var(--border);border-radius:11px;
+  padding:20px 12px;text-align:center;position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.s-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+.s-card:hover{transform:translateY(-3px);border-color:rgba(204,0,0,.45);box-shadow:0 6px 22px rgba(139,0,0,.22)}
+.s-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.3rem,3vw,2rem);font-weight:700;
+  color:var(--red);text-shadow:0 0 10px rgba(204,0,0,.4);margin-bottom:5px;
+}
+.s-lbl{font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:#554444}
+
+.srv-bar{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:22px;padding:14px 16px;
+  background:rgba(139,0,0,.08);border:1px solid var(--border);border-radius:9px;
+}
+.srv-item .srv-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#443333;font-family:'Orbitron',sans-serif}
+.srv-item .srv-val{font-size:.88rem;color:var(--light);font-weight:600;margin-top:2px}
+
+/* ===================== GALLERY ===================== */
+#gallery{background:linear-gradient(180deg,#060000,#090000,#060000)}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+@media(max-width:620px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:360px){.gallery-grid{grid-template-columns:1fr}}
+
+.g-item{
+  position:relative;border-radius:9px;overflow:hidden;cursor:pointer;
+  background:rgba(80,0,0,.15);border:1px solid var(--border);
+  aspect-ratio:16/10;
+  transition:transform .25s,box-shadow .25s;
+}
+.g-item:hover{transform:scale(1.03);box-shadow:0 6px 22px rgba(139,0,0,.38)}
+.g-item img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
+.g-ph{
+  position:absolute;inset:0;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  color:#332222;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;
+}
+.g-ph-ico{font-size:2rem;opacity:.35}
+.g-ov{
+  position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 55%);
+  opacity:0;transition:opacity .25s;
+  display:flex;align-items:flex-end;padding:10px;
+}
+.g-item:hover .g-ov{opacity:1}
+.g-cap{font-size:.75rem;color:#fff;letter-spacing:1px;font-weight:600}
+
+/* lightbox */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:9900;
+  background:rgba(0,0,0,.93);
+  align-items:center;justify-content:center;padding:20px;
+}
+#lightbox.open{display:flex}
+#lb-img{max-width:92vw;max-height:88vh;border-radius:9px;border:2px solid var(--blood)}
+.lb-x{
+  position:absolute;top:16px;right:20px;
+  background:rgba(139,0,0,.5);color:#fff;
+  width:36px;height:36px;border-radius:50%;font-size:1rem;
+  transition:background .2s;
+}
+.lb-x:hover{background:var(--red)}
+
+/* ===================== LEADERBOARD ===================== */
+#leaderboard{background:linear-gradient(180deg,#060000,#0d0000,#060000)}
+
+.lb-tabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:clamp(22px,4vw,38px)}
+.lb-tab{
+  background:rgba(139,0,0,.1);border:1px solid var(--border);
+  color:#777;padding:9px 20px;border-radius:6px;
+  font-weight:700;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;
+  transition:all .22s;
+}
+.lb-tab.active,.lb-tab:hover{
+  background:linear-gradient(135deg,var(--red),var(--blood));
+  color:#fff;border-color:var(--red);box-shadow:0 0 12px rgba(204,0,0,.38);
+}
+
+.lb-panel{display:none}
+.lb-panel.active{display:block}
+
+.podium{
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:clamp(8px,2vw,18px);flex-wrap:wrap;padding-bottom:8px;
+}
+.p-card{
+  flex:0 0 clamp(140px,26vw,210px);
+  background:linear-gradient(155deg,rgba(139,0,0,.14),rgba(30,0,0,.1));
+  border:1px solid var(--border);border-radius:13px;
+  padding:20px 14px;text-align:center;position:relative;overflow:hidden;
+  transition:transform .25s,box-shadow .25s;
+}
+.p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.p-card.r1{border-color:rgba(255,215,0,.3);box-shadow:0 0 18px rgba(255,215,0,.09)}
+.p-card.r1::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.p-card.r2::before{background:linear-gradient(90deg,transparent,var(--silver),transparent)}
+.p-card.r3::before{background:linear-gradient(90deg,transparent,var(--bronze),transparent)}
+.p-card.r1{transform:translateY(-14px)}
+.p-card:hover{transform:translateY(-5px)!important;box-shadow:0 8px 26px rgba(139,0,0,.3)!important}
+.p-medal{font-size:1.7rem;margin-bottom:9px}
+.p-avatar{
+  width:60px;height:60px;margin:0 auto 9px;
+  border-radius:8px;overflow:hidden;
+  border:2px solid rgba(139,0,0,.28);background:#180000;
+}
+.p-avatar img{width:100%;height:100%;object-fit:cover}
+.p-name{font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:700;color:var(--light);margin-bottom:4px;word-break:break-all}
+.p-val{font-size:1rem;font-weight:700;color:var(--red);margin-bottom:2px}
+.p-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#443333}
+
+/* HOF */
+.hof{
+  margin-top:clamp(36px,5vw,60px);
+  background:linear-gradient(135deg,rgba(139,0,0,.09),rgba(60,0,0,.06));
+  border:1px solid rgba(255,90,0,.18);border-radius:14px;
+  padding:clamp(22px,4vw,40px);
+}
+.hof-hdr{text-align:center;margin-bottom:26px}
+.hof-hdr h3{
+  font-family:'Cinzel',serif;font-size:clamp(1.2rem,2.8vw,1.7rem);
+  color:var(--ember);text-shadow:0 0 12px rgba(255,68,0,.35);
+}
+.hof-hdr p{color:#554444;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;margin-top:5px}
+.hof-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:11px;
+}
+@media(max-width:780px){.hof-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.hof-grid{grid-template-columns:repeat(2,1fr)}}
+.hof-card{
+  background:rgba(0,0,0,.22);border:1px solid rgba(255,90,0,.14);
+  border-radius:11px;padding:16px 10px;text-align:center;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.hof-card:hover{transform:translateY(-4px);border-color:rgba(255,90,0,.38);box-shadow:0 6px 20px rgba(255,68,0,.12)}
+.hof-ico{font-size:1.9rem;margin-bottom:7px}
+.hof-ttl{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#ff6622;margin-bottom:5px;font-family:'Orbitron',sans-serif}
+.hof-name{font-family:'Cinzel',serif;font-size:.9rem;color:var(--light);font-weight:700;margin-bottom:5px}
+.hof-desc{font-size:.73rem;color:#554444;line-height:1.5}
+
+/* ===================== DISCORD ===================== */
+#discord{background:linear-gradient(180deg,#060000,#07000d,#060000)}
+
+.dc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,4vw,46px);align-items:start}
+@media(max-width:680px){.dc-wrap{grid-template-columns:1fr}}
+
+.dc-info h3{font-family:'Cinzel',serif;font-size:clamp(1.1rem,2.4vw,1.6rem);color:var(--light);margin-bottom:10px}
+.dc-info p{color:#776666;line-height:1.8;font-size:.93rem;margin-bottom:18px}
+.dc-counts{display:flex;gap:13px;margin-bottom:20px;flex-wrap:wrap}
+.dc-count{
+  background:rgba(88,101,242,.11);border:1px solid rgba(88,101,242,.22);
+  border-radius:9px;padding:13px 18px;flex:1;min-width:85px;text-align:center;
+}
+.dc-count-num{font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:700;color:var(--discord)}
+.dc-count-lbl{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:2px}
+.dc-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#5865f2,#4752c4);
+  color:#fff;padding:11px 24px;border-radius:8px;
+  font-weight:700;font-size:.84rem;letter-spacing:1.5px;text-transform:uppercase;
+  box-shadow:0 0 14px rgba(88,101,242,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.dc-btn:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(88,101,242,.55)}
+
+.dc-widget-box{
+  background:rgba(255,255,255,.02);border:1px solid rgba(88,101,242,.18);
+  border-radius:12px;overflow:hidden;
+}
+.w-head{
+  background:rgba(88,101,242,.12);
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(88,101,242,.15);
+}
+.w-srv-name{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;color:var(--light)}
+.w-online{display:flex;align-items:center;gap:5px;font-size:.7rem;color:#57f287;font-family:'Orbitron',sans-serif}
+.wdot{width:7px;height:7px;border-radius:50%;background:#57f287;box-shadow:0 0 5px #57f287;flex-shrink:0;animation:blink 1.8s infinite}
+.w-ml-lbl{padding:8px 14px;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#555;font-family:'Orbitron',sans-serif;border-bottom:1px solid rgba(255,255,255,.04)}
+.member-list{max-height:240px;overflow-y:auto;padding:8px 0}
+.member-list::-webkit-scrollbar{width:3px}
+.member-list::-webkit-scrollbar-thumb{background:rgba(88,101,242,.3);border-radius:3px}
+.m-item{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 14px;transition:background .15s;
+}
+.m-item:hover{background:rgba(255,255,255,.03)}
+.m-av{position:relative;width:32px;height:32px;flex-shrink:0}
+.m-av img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.m-sdot{
+  position:absolute;bottom:0;right:0;
+  width:9px;height:9px;border-radius:50%;
+  border:2px solid #07000d;
+}
+.m-name{font-size:.82rem;font-weight:600;color:#dcddde}
+.m-act{font-size:.7rem;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.w-foot{
+  padding:8px 14px;font-size:.68rem;color:#444;
+  border-top:1px solid rgba(255,255,255,.04);text-align:center;
+  font-family:'Orbitron',sans-serif;letter-spacing:1px;
+}
+.dc-spinner{
+  width:24px;height:24px;border-radius:50%;
+  border:2px solid rgba(88,101,242,.2);border-top-color:#5865f2;
+  animation:spin .8s linear infinite;margin:0 auto 8px;
+}
+.dc-msg{padding:22px;text-align:center;color:#444;font-size:.82rem}
+
+/* ===================== NEWS ===================== */
+#news{background:linear-gradient(180deg,#060000,#0a0000,#060000)}
+
+.news-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(18px,3vw,30px)}
+@media(max-width:700px){.news-layout{grid-template-columns:1fr}}
+
+.news-feat{
+  background:linear-gradient(140deg,rgba(139,0,0,.1),rgba(40,0,0,.07));
+  border:1px solid var(--border);border-radius:13px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .25s,box-shadow .25s;
+}
+.news-feat:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(139,0,0,.22)}
+.news-thumb{
+  height:clamp(110px,20vw,180px);
+  background:linear-gradient(135deg,#1a0000,#0d0000);
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(2.5rem,6vw,4rem);
+  border-bottom:1px solid var(--border);
+}
+.news-body{padding:clamp(14px,2.5vw,22px)}
+.news-tag{
+  display:inline-block;background:rgba(204,0,0,.18);
+  border:1px solid rgba(204,0,0,.3);border-radius:4px;
+  padding:2px 9px;font-size:.58rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--red);margin-bottom:9px;
+  font-family:'Orbitron',sans-serif;
+}
+.news-body h3{font-family:'Cinzel',serif;font-size:clamp(.95rem,2vw,1.2rem);color:var(--light);margin-bottom:8px;line-height:1.35}
+.news-body p{color:#776666;font-size:.88rem;line-height:1.7;margin-bottom:10px}
+.news-date{font-size:.7rem;color:#443333;letter-spacing:1px}
+
+.news-list{display:flex;flex-direction:column;gap:9px}
+.n-item{
+  background:linear-gradient(135deg,rgba(139,0,0,.09),rgba(30,0,0,.06));
+  border:1px solid var(--border);border-radius:10px;
+  padding:clamp(12px,2vw,16px);
+  transition:transform .22s,border-color .22s,box-shadow .22s;
+}
+.n-item:hover{transform:translateX(3px);border-color:rgba(204,0,0,.38);box-shadow:0 4px 16px rgba(139,0,0,.18)}
+.n-item h4{font-family:'Cinzel',serif;font-size:clamp(.82rem,1.8vw,1rem);color:var(--light);margin:6px 0 5px}
+.n-item .news-date{font-size:.66rem;color:#443333}
+
+/* ===================== YOUTUBE ===================== */
+#youtube{background:linear-gradient(180deg,#060000,#0a0000,#060000)}
+
+.yt-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(22px,4vw,44px);align-items:start}
+@media(max-width:700px){.yt-layout{grid-template-columns:1fr}}
+
+.yt-embed-wrap{
+  background:#000;border-radius:11px;overflow:hidden;
+  border:1px solid var(--border);aspect-ratio:16/9;
+}
+.yt-embed-wrap iframe{width:100%;height:100%;display:block}
+
+.yt-info h3{font-family:'Cinzel',serif;font-size:clamp(1.1rem,2.2vw,1.55rem);color:var(--light);margin-bottom:10px}
+.yt-info p{color:#776666;font-size:.9rem;line-height:1.75;margin-bottom:18px}
+.yt-stats{display:flex;gap:11px;margin-bottom:20px;flex-wrap:wrap}
+.yt-stat{
+  background:rgba(255,0,0,.09);border:1px solid rgba(255,0,0,.18);
+  border-radius:8px;padding:12px 16px;flex:1;min-width:70px;text-align:center;
+}
+.yt-num{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#ff4444}
+.yt-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#443333;margin-top:2px}
+.yt-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#ff0000,#cc0000);
+  color:#fff;padding:11px 22px;border-radius:8px;
+  font-weight:700;font-size:.84rem;letter-spacing:1.5px;text-transform:uppercase;
+  box-shadow:0 0 14px rgba(255,0,0,.3);
+  transition:transform .2s,box-shadow .2s;
+}
+.yt-btn:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(255,0,0,.5)}
+
+/* ===================== FOOTER ===================== */
+footer{
+  background:#030000;border-top:1px solid var(--border);
+  padding:clamp(36px,5vw,60px) 0 clamp(18px,3vw,28px);
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;
+  gap:clamp(22px,4vw,40px);margin-bottom:clamp(24px,4vw,36px);
+}
+@media(max-width:680px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.footer-grid{grid-template-columns:1fr}}
+.f-brand{grid-column:span 1}
+.f-brand-name{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:900;color:var(--light);margin-bottom:9px}
+.f-brand-name em{color:var(--red);font-style:normal}
+.f-brand p{color:#554444;font-size:.85rem;line-height:1.7}
+.f-col h4{font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:#664444;margin-bottom:13px}
+.f-col ul li{margin-bottom:8px}
+.f-col ul li a{color:#554444;font-size:.88rem;transition:color .2s}
+.f-col ul li a:hover{color:var(--red)}
+.f-bottom{
+  border-top:1px solid rgba(139,0,0,.15);
+  padding-top:clamp(14px,2.5vw,20px);
+  text-align:center;font-size:.74rem;color:#332222;letter-spacing:1px;
+}
+
+/* ===================== TOAST ===================== */
+#toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(10px);
+  z-index:9999;background:var(--blood);color:#fff;
+  padding:10px 22px;border-radius:7px;font-size:.82rem;letter-spacing:1px;
+  opacity:0;transition:opacity .28s,transform .28s;pointer-events:none;
+  white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <div class="logo-box">⚔️</div>
+    <span class="logo-txt"><em>REBEL</em> SMP</span>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#discord">Discord</a>
+    <a href="#news">News</a>
+    <a href="#youtube">YouTube</a>
+    <a href="https://discord.gg/YOUR_INVITE" target="_blank" id="nav-dc" class="nav-cta">Join Now</a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span id="hero-badge-txt">Bedrock Edition · Season 1</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="title-rebel">REBEL</span>
+      <span class="title-smp">SMP</span>
+    </h1>
+    <p class="hero-tagline">India's Most Intense Minecraft Experience</p>
+    <div class="hero-pills">
+      <div class="pill live">
+        <span class="pill-dot"></span>
+        <span id="pill-status">Checking…</span>
+      </div>
+      <div class="pill">
+        👥 <strong id="pill-players">—</strong>&nbsp;online
+      </div>
+      <div class="pill">
+        💬 Discord: <strong id="pill-dc">—</strong>
+      </div>
+    </div>
+    <div class="hero-ip">
+      <div class="ip-label">SERVER IP</div>
+      <button class="ip-val" onclick="copyIP()" title="Click to copy">
+        <span id="ip-display">play.rebelmc.fun</span>
+        <span style="font-size:.65rem;opacity:.5">📋</span>
+      </button>
+      <div class="ip-port">PORT <strong id="port-display">19135</strong></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-red" onclick="copyIP()">⚔️ Copy IP</button>
+      <a class="btn-outline" href="https://discord.gg/YOUR_INVITE" target="_blank" id="hero-dc-btn">💬 Join Discord</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Who We Are</div>
+      <h2 class="sec-title">About <span>REBEL SMP</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="about-wrap">
+      <div class="about-text reveal">
+        <h3>The Rebellion Begins</h3>
+        <p>REBEL SMP is <strong>India's most intense Minecraft Bedrock SMP</strong> — a place where alliances break, legends are born, and every login could be your last. We don't play by the rules. We make them.</p>
+        <p>From brutal PvP arenas to massive economy wars, REBEL SMP delivers a pure survival multiplayer experience driven by the community. <strong>Every season brings a fresh map, fresh chaos, and fresh legends.</strong></p>
+        <p>Whether you're here to grind the economy, dominate the kill charts, or just survive — REBEL SMP is your battleground.</p>
+        <div class="feats">
+          <div class="feat"><div class="feat-ico">⚔️</div>Hardcore PvP</div>
+          <div class="feat"><div class="feat-ico">💰</div>Player Economy</div>
+          <div class="feat"><div class="feat-ico">🏆</div>Tournaments</div>
+          <div class="feat"><div class="feat-ico">🗺️</div>Fresh Seasons</div>
+          <div class="feat"><div class="feat-ico">🤝</div>Clans & Alliances</div>
+          <div class="feat"><div class="feat-ico">🎁</div>Events & Rewards</div>
+          <div class="feat"><div class="feat-ico">📱</div>Bedrock Edition</div>
+          <div class="feat"><div class="feat-ico">🇮🇳</div>India-Based</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="stats-grid">
+          <div class="s-card">
+            <div class="s-num" id="cnt-players" data-target="500">0</div>
+            <div class="s-lbl">Total Players</div>
+          </div>
+          <div class="s-card">
+            <div class="s-num" id="cnt-kills" data-target="9850">0</div>
+            <div class="s-lbl">Total Kills</div>
+          </div>
+          <div class="s-card">
+            <div class="s-num" id="cnt-season">S1</div>
+            <div class="s-lbl">Current Season</div>
+          </div>
+          <div class="s-card">
+            <div class="s-num" id="cnt-events" data-target="24">0</div>
+            <div class="s-lbl">Events Held</div>
+          </div>
+        </div>
+        <div class="srv-bar">
+          <div class="srv-item">
+            <div class="srv-lbl">IP</div>
+            <div class="srv-val">play.rebelmc.fun</div>
+          </div>
+          <div class="srv-item">
+            <div class="srv-lbl">Port</div>
+            <div class="srv-val">19135</div>
+          </div>
+          <div class="srv-item">
+            <div class="srv-lbl">Edition</div>
+            <div class="srv-val">Bedrock</div>
+          </div>
+          <div class="srv-item">
+            <div class="srv-lbl">Status</div>
+            <div class="srv-val" id="about-status">Checking…</div>
+          </div>
+          <div class="srv-item">
+            <div class="srv-lbl">Players</div>
+            <div class="srv-val" id="about-players">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALLERY ========== -->
+<section id="gallery">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Screenshots</div>
+      <h2 class="sec-title">Server <span>Gallery</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-x" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt=""/>
+</div>
+
+<!-- ========== LEADERBOARD ========== -->
+<section id="leaderboard">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Rankings</div>
+      <h2 class="sec-title">Top <span>Leaderboard</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="lb-tabs reveal">
+      <button class="lb-tab active" onclick="switchTab('balance',this)">💰 Top Balance</button>
+      <button class="lb-tab" onclick="switchTab('playtime',this)">⏱ Top Playtime</button>
+      <button class="lb-tab" onclick="switchTab('kills',this)">⚔️ Top Kills</button>
+    </div>
+    <div class="lb-panel active" id="panel-balance"></div>
+    <div class="lb-panel" id="panel-playtime"></div>
+    <div class="lb-panel" id="panel-kills"></div>
+    <div id="hof-wrap"></div>
+  </div>
+</section>
+
+<!-- ========== DISCORD ========== -->
+<section id="discord">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Community</div>
+      <h2 class="sec-title">Join Our <span>Discord</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="dc-wrap">
+      <div class="dc-info reveal">
+        <h3>Live Discord Community</h3>
+        <p>Connect with REBEL SMP players. Get announcements, find teammates, report bugs, join voice chats, and flex your wins — all in our active Discord server.</p>
+        <div class="dc-counts">
+          <div class="dc-count">
+            <div class="dc-count-num" id="dc-online">—</div>
+            <div class="dc-count-lbl">Online Now</div>
+          </div>
+          <div class="dc-count">
+            <div class="dc-count-num" id="dc-total">—</div>
+            <div class="dc-count-lbl">Total Visible</div>
+          </div>
+        </div>
+        <a class="dc-btn" id="dc-join" href="https://discord.gg/YOUR_INVITE" target="_blank">💬 Join Discord</a>
+      </div>
+      <div class="dc-widget-box reveal">
+        <div class="w-head">
+          <div class="w-srv-name">⚔️ REBEL SMP</div>
+          <div class="w-online">
+            <span class="wdot"></span>
+            <span id="w-online-txt">Loading…</span>
+          </div>
+        </div>
+        <div class="w-ml-lbl">ONLINE MEMBERS</div>
+        <div class="member-list" id="member-list">
+          <div class="dc-msg"><div class="dc-spinner"></div>Fetching members…</div>
+        </div>
+        <div class="w-foot" id="w-foot">Connecting…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== NEWS ========== -->
+<section id="news">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Updates</div>
+      <h2 class="sec-title">Latest <span>News</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="news-layout" id="news-layout"></div>
+  </div>
+</section>
+
+<!-- ========== YOUTUBE ========== -->
+<section id="youtube">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Watch Us</div>
+      <h2 class="sec-title">YouTube <span>Channel</span></h2>
+      <div class="sec-div"></div>
+    </div>
+    <div class="yt-layout reveal">
+      <div class="yt-embed-wrap" id="yt-embed"></div>
+      <div class="yt-info">
+        <h3>▶ REBEL SMP on YouTube</h3>
+        <p>Watch epic PvP highlights, season recaps, event VODs, and exclusive content. New videos every week — don't miss a thing!</p>
+        <div class="yt-stats">
+          <div class="yt-stat"><div class="yt-num" id="yt-subs">1.2K</div><div class="yt-lbl">Subscribers</div></div>
+          <div class="yt-stat"><div class="yt-num" id="yt-vids">48</div><div class="yt-lbl">Videos</div></div>
+          <div class="yt-stat"><div class="yt-num" id="yt-views">50K</div><div class="yt-lbl">Views</div></div>
+        </div>
+        <a class="yt-btn" id="yt-ch-btn" href="https://youtube.com/@YourChannel" target="_blank">▶ Visit Channel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="f-brand">
+        <div class="f-brand-name"><em>REBEL</em> SMP</div>
+        <p>India's most intense Minecraft Bedrock SMP. Join the rebellion and carve your legacy.</p>
+      </div>
+      <div class="f-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#leaderboard">Leaderboard</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#youtube">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a id="f-dc" href="https://discord.gg/YOUR_INVITE" target="_blank">Discord Server</a></li>
+          <li><a id="f-yt" href="https://youtube.com/@YourChannel" target="_blank">YouTube Channel</a></li>
+          <li><a href="#hero" onclick="copyIP()">Copy Server IP</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      © 2025 REBEL SMP — All rights reserved · Not affiliated with Mojang
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   ▼▼▼  EDIT EVERYTHING HERE  ▼▼▼
+   ============================================================ */
+
+var SERVER_IP   = 'play.rebelmc.fun';
+var SERVER_PORT = '19135';
+
+/* Get your Discord Server ID:
+   Right-click your server icon → Copy Server ID
+   (Enable Developer Mode in Discord Settings → Advanced first) */
+var DISCORD_SERVER_ID  = 'YOUR_SERVER_ID';
+var DISCORD_INVITE_URL = 'https://discord.gg/YOUR_INVITE';
+
+/* YouTube: paste the video ID (the part after ?v= in the URL)
+   and your channel URL */
+var YT_VIDEO_ID      = 'dQw4w9WgXcQ';
+var YT_CHANNEL_URL   = 'https://youtube.com/@YourChannel';
+var YT_SUBSCRIBERS   = '1.2K';
+var YT_VIDEOS        = '48';
+var YT_VIEWS         = '50K';
+
+/* 4 Stat boxes in About section */
+var TOTAL_PLAYERS = 500;
+var TOTAL_KILLS   = 9850;
+var SEASON_NUMBER = 1;
+var EVENTS_HELD   = 24;
+
+/* Leaderboards — exactly 3 players each
+   avatar = Minecraft username (used to fetch skin) */
+var LB_BALANCE = [
+  { name: 'SteveKing',   value: '$2,400,000', avatar: 'SteveKing'   },
+  { name: 'CreeperBoss', value: '$1,850,000', avatar: 'CreeperBoss' },
+  { name: 'EndSlayer',   value: '$1,200,000', avatar: 'EndSlayer'   }
+];
+var LB_PLAYTIME = [
+  { name: 'NightOwl99',  value: '312 hrs',    avatar: 'NightOwl99'  },
+  { name: 'GrindMaster', value: '278 hrs',    avatar: 'GrindMaster' },
+  { name: 'CaveRunner',  value: '241 hrs',    avatar: 'CaveRunner'  }
+];
+var LB_KILLS = [
+  { name: 'BloodReaper', value: '847 kills',  avatar: 'BloodReaper' },
+  { name: 'PhantomX',    value: '634 kills',  avatar: 'PhantomX'    },
+  { name: 'IronFang',    value: '512 kills',  avatar: 'IronFang'    }
+];
+
+/* Hall of Flame — exactly 5 legends */
+var HALL_OF_FAME = [
+  { icon:'🔥', title:'Season 1 Champion',    name:'BloodReaper', desc:'Dominated Season 1 with 847 kills and the most feared name on the server.' },
+  { icon:'💰', title:'Richest Player',        name:'SteveKing',   desc:'Built an empire worth over $2.4 million through trading and grinding.' },
+  { icon:'🛡️', title:'Last Man Standing',    name:'PhantomX',    desc:'Survived three server wipes without losing a single item.' },
+  { icon:'⚡', title:'Fastest Kill Streak',  name:'IronFang',    desc:'Achieved a 50-kill streak in a single session during the Blood Moon event.' },
+  { icon:'👑', title:'OG Rebel',             name:'NightOwl99',  desc:'One of the first 10 players ever to join REBEL SMP. A true legend.' }
+];
+
+/* Latest News */
+var NEWS_FEATURED = {
+  emoji: '🔥',
+  tag:   'ANNOUNCEMENT',
+  title: 'Season 2 is Coming — The Map Resets!',
+  body:  'The REBEL SMP Season 2 map reset is officially confirmed! A brand new world, new rules, new events, and new legends. Season 1 closes on July 31st. Prepare for the chaos.',
+  date:  'July 18, 2025'
+};
+var NEWS_ITEMS = [
+  { tag:'EVENT',   title:'Blood Moon Event — Every Friday Night!',           date:'July 15, 2025' },
+  { tag:'UPDATE',  title:'New PvP Arena Added: The Crimson Pit',             date:'July 10, 2025' },
+  { tag:'PATCH',   title:'Economy Rebalance: Shops & Trade Updated',         date:'July 5, 2025'  },
+  { tag:'DISCORD', title:'REBEL SMP Discord hits 500 members!',              date:'June 30, 2025' },
+  { tag:'SEASON',  title:'Season 1 Hall of Fame officially announced',       date:'June 22, 2025' }
+];
+
+/* Gallery images
+   Put your images in a folder called "images" on GitHub.
+   Use exact filenames. If an image is missing a placeholder shows. */
+var GALLERY = [
+  { src:'images/gallery1.png',  caption:'Spawn City'         },
+  { src:'images/gallery2.png',  caption:'PvP Arena'          },
+  { src:'images/gallery3.png',  caption:'Blood Moon Event'   },
+  { src:'images/gallery4.png',  caption:'Player Builds'      },
+  { src:'images/gallery5.png',  caption:'Epic Battle'        },
+  { src:'images/gallery6.png',  caption:'Season 1 Winners'   }
+];
+
+/* ============================================================
+   ▲▲▲  END OF CONFIG  ▲▲▲
+   ============================================================ */
+
+
+/* ---- helpers ---- */
+function g(id){ return document.getElementById(id); }
+function txt(id,v){ var e=g(id); if(e) e.textContent=v; }
+function href(id,v){ var e=g(id); if(e) e.href=v; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ---- toast ---- */
+function toast(msg){
+  var t=g('toast'); if(!t) return;
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+
+/* ---- navbar toggle ---- */
+function toggleNav(){
+  g('hamburger').classList.toggle('open');
+  g('nav-links').classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(){
+    g('hamburger').classList.remove('open');
+    g('nav-links').classList.remove('open');
+  });
+});
+
+/* ---- copy IP ---- */
+function copyIP(){
+  var msg = 'Copied! '+SERVER_IP+'  |  Port: '+SERVER_PORT;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(SERVER_IP).then(function(){ toast(msg); }).catch(function(){ toast(msg); });
+  } else { toast(msg); }
+}
+
+/* ---- apply config to static elements ---- */
+(function applyConfig(){
+  txt('hero-badge-txt','Bedrock Edition · Season '+SEASON_NUMBER);
+  g('ip-display').textContent = SERVER_IP;
+  g('port-display').textContent = SERVER_PORT;
+  txt('cnt-season','S'+SEASON_NUMBER);
+  var cp=g('cnt-players'); if(cp) cp.dataset.target=TOTAL_PLAYERS;
+  var ck=g('cnt-kills');   if(ck) ck.dataset.target=TOTAL_KILLS;
+  var ce=g('cnt-events');  if(ce) ce.dataset.target=EVENTS_HELD;
+  txt('yt-subs',  YT_SUBSCRIBERS);
+  txt('yt-vids',  YT_VIDEOS);
+  txt('yt-views', YT_VIEWS);
+
+  var dcBtns = ['nav-dc','hero-dc-btn','dc-join','f-dc'];
+  dcBtns.forEach(function(id){ href(id, DISCORD_INVITE_URL); });
+  href('yt-ch-btn', YT_CHANNEL_URL);
+  href('f-yt',      YT_CHANNEL_URL);
+
+  var ytEl = g('yt-embed');
+  if(ytEl) ytEl.innerHTML = '<iframe src="https://www.youtube.com/embed/'+YT_VIDEO_ID+'?rel=0&modestbranding=1" allowfullscreen allow="encrypted-media" loading="lazy" title="REBEL SMP YouTube"></iframe>';
+})();
+
+/* ---- gallery ---- */
+(function buildGallery(){
+  var grid = g('gallery-grid'); if(!grid) return;
+  var html = '';
+  GALLERY.forEach(function(item){
+    html += '<div class="g-item reveal" onclick="openLightbox(\''+esc(item.src)+'\',\''+esc(item.caption)+'\')">';
+    html += '<img src="'+esc(item.src)+'" alt="'+esc(item.caption)+'" loading="lazy" onerror="this.style.display=\'none\'">';
+    html += '<div class="g-ph"><span class="g-ph-ico">🖼️</span><span>'+esc(item.caption)+'</span></div>';
+    html += '<div class="g-ov"><span class="g-cap">📸 '+esc(item.caption)+'</span></div>';
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+  grid.querySelectorAll('img').forEach(function(img){
+    var ph = img.nextElementSibling;
+    if(!ph) return;
+    if(img.complete && img.naturalWidth>0){ ph.style.display='none'; return; }
+    img.addEventListener('load',function(){ ph.style.display='none'; });
+  });
+})();
+
+/* ---- lightbox ---- */
+function openLightbox(src,alt){
+  var img=g('lb-img'); if(img){ img.src=src; img.alt=alt||''; }
+  g('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  g('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeLightbox(); });
+
+/* ---- podium builder ---- */
+function buildPodium(panelId, players, label){
+  var el = g(panelId); if(!el) return;
+  var medals = ['🥇','🥈','🥉'];
+  var html = '<div class="podium">';
+  players.slice(0,3).forEach(function(p,i){
+    var av = 'https://mc-heads.net/avatar/'+encodeURIComponent(p.avatar||p.name)+'/60';
+    html += '<div class="p-card r'+(i+1)+' reveal">';
+    html += '<div class="p-medal">'+medals[i]+'</div>';
+    html += '<div class="p-avatar"><img src="'+esc(av)+'" alt="'+esc(p.name)+'" onerror="this.style.display=\'none\'"></div>';
+    html += '<div class="p-name">'+esc(p.name)+'</div>';
+    html += '<div class="p-val">'+esc(p.value)+'</div>';
+    html += '<div class="p-lbl">'+esc(label)+'</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+buildPodium('panel-balance',  LB_BALANCE,  'Balance');
+buildPodium('panel-playtime', LB_PLAYTIME, 'Playtime');
+buildPodium('panel-kills',    LB_KILLS,    'Kills');
+
+/* ---- tab switcher ---- */
+function switchTab(id, btn){
+  document.querySelectorAll('.lb-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.lb-panel').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  var panel = g('panel-'+id);
+  if(panel){
+    panel.classList.add('active');
+    panel.querySelectorAll('.reveal').forEach(function(r){
+      r.classList.remove('vis');
+      setTimeout(function(){ r.classList.add('vis'); }, 60);
+    });
+  }
+}
+
+/* ---- Hall of Fame ---- */
+(function buildHOF(){
+  var el = g('hof-wrap'); if(!el) return;
+  var html = '<div class="hof reveal">';
+  html += '<div class="hof-hdr"><h3>🔥 Hall of Flame</h3><p>Legends of REBEL SMP</p></div>';
+  html += '<div class="hof-grid">';
+  HALL_OF_FAME.slice(0,5).forEach(function(h){
+    html += '<div class="hof-card">';
+    html += '<div class="hof-ico">'+h.icon+'</div>';
+    html += '<div class="hof-ttl">'+esc(h.title)+'</div>';
+    html += '<div class="hof-name">'+esc(h.name)+'</div>';
+    html += '<div class="hof-desc">'+esc(h.desc)+'</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+  el.innerHTML = html;
+})();
+
+/* ---- News ---- */
+(function buildNews(){
+  var el = g('news-layout'); if(!el) return;
+  var f = NEWS_FEATURED;
+  var html = '<div class="news-feat reveal">';
+  html += '<div class="news-thumb">'+f.emoji+'</div>';
+  html += '<div class="news-body">';
+  html += '<span class="news-tag">'+esc(f.tag)+'</span>';
+  html += '<h3>'+esc(f.title)+'</h3>';
+  html += '<p>'+esc(f.body)+'</p>';
+  html += '<div class="news-date">📅 '+esc(f.date)+'</div>';
+  html += '</div></div>';
+  html += '<div class="news-list">';
+  NEWS_ITEMS.forEach(function(n){
+    html += '<div class="n-item reveal">';
+    html += '<span class="news-tag">'+esc(n.tag)+'</span>';
+    html += '<h4>'+esc(n.title)+'</h4>';
+    html += '<div class="news-date">📅 '+esc(n.date)+'</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+})();
+
+/* ---- Reveal on scroll ---- */
+var revObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{ threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(function(el){ revObs.observe(el); });
+
+/* ---- Counter animation ---- */
+var counted = new Set();
+var cntObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting && !counted.has(e.target)){
+      counted.add(e.target);
+      var target = parseInt(e.target.dataset.target)||0;
+      var el = e.target, cur = 0, step = Math.ceil(target/55);
+      var tid = setInterval(function(){
+        cur = Math.min(cur+step, target);
+        el.textContent = cur.toLocaleString();
+        if(cur >= target) clearInterval(tid);
+      }, 20);
+    }
+  });
+},{ threshold: 0.3 });
+document.querySelectorAll('[data-target]').forEach(function(el){ cntObs.observe(el); });
+
+/* ---- Live Server Status ---- */
+function fetchServerStatus(){
+  fetch('https://api.mcsrvstat.us/bedrock/3/'+SERVER_IP, { cache:'no-cache' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var online = d && d.online;
+      var pl = online && d.players ? d.players.online : 0;
+      var mx = online && d.players ? d.players.max : '?';
+      var dot = document.querySelector('.pill.live .pill-dot');
+      if(online){
+        if(dot){ dot.style.background='#00ff88'; dot.style.boxShadow='0 0 5px #00ff88'; }
+        txt('pill-status','🟢 Online');
+        txt('pill-players', pl);
+        txt('about-status','🟢 Online');
+        txt('about-players', pl+' / '+mx);
+      } else {
+        if(dot){ dot.style.background='#ff4444'; dot.style.boxShadow='0 0 5px #ff4444'; }
+        txt('pill-status','🔴 Offline');
+        txt('pill-players','0');
+        txt('about-status','🔴 Offline');
+        txt('about-players','0 / 0');
+      }
+    })
+    .catch(function(){
+      txt('pill-status','⚠ Error');
+      txt('about-status','⚠ Error');
+    });
+}
+fetchServerStatus();
+setInterval(fetchServerStatus, 60000);
+
+/* ---- Live Discord Widget ---- */
+function fetchDiscord(){
+  var id = DISCORD_SERVER_ID;
+  if(!id || id === 'YOUR_SERVER_ID'){
+    showDcFallback('Put your Discord Server ID in the config at the top of this file.');
+    return;
+  }
+  fetch('https://discord.com/api/guilds/'+id+'/widget.json', { cache:'no-cache' })
+    .then(function(r){
+      if(!r.ok) throw new Error('Widget disabled or wrong ID');
+      return r.json();
+    })
+    .then(function(d){
+      var members = d.members || [];
+      var count = members.length;
+      txt('pill-dc', count);
+      txt('dc-online', count);
+      txt('dc-total', d.presence_count || count);
+      txt('w-online-txt', count+' members online');
+      txt('w-foot','Live · updated '+new Date().toLocaleTimeString());
+
+      var list = g('member-list');
+      if(!list) return;
+      if(count === 0){
+        list.innerHTML = '<div class="dc-msg">No visible members right now.</div>';
+        return;
+      }
+      list.innerHTML = '';
+      members.slice(0,20).forEach(function(m){
+        var av = m.avatar_url || ('https://cdn.discordapp.com/embed/avatars/'+(Math.floor(Math.random()*5))+'.png');
+        var st = m.status || 'online';
+        var act = (m.game && m.game.name) || (st==='dnd' ? 'Do Not Disturb' : st==='idle' ? 'Away' : 'Playing Minecraft');
+        var clr = st==='dnd' ? '#ed4245' : st==='idle' ? '#faa81a' : '#57f287';
+        var div = document.createElement('div');
+        div.className = 'm-item';
+        div.innerHTML =
+          '<div class="m-av"><img src="'+esc(av)+'" alt="'+esc(m.username)+'" onerror="this.src=\'https://cdn.discordapp.com/embed/avatars/0.png\'">'
+          +'<div class="m-sdot" style="background:'+clr+';box-shadow:0 0 4px '+clr+'"></div></div>'
+          +'<div><div class="m-name">'+esc(m.username)+'</div><div class="m-act">'+esc(act)+'</div></div>';
+        list.appendChild(div);
+      });
+    })
+    .catch(function(err){
+      showDcFallback('Enable Widget: Discord Server Settings → Widget → Enable Server Widget');
+    });
+}
+
+function showDcFallback(msg){
+  txt('pill-dc','—'); txt('dc-online','—'); txt('dc-total','—');
+  txt('w-online-txt','Widget offline');
+  txt('w-foot', msg || 'Widget not enabled');
+  var list = g('member-list');
+  if(!list) return;
+  list.innerHTML =
+    '<div class="dc-msg">'
+    +'<div style="font-size:2rem;margin-bottom:8px">💬</div>'
+    +'<div style="color:#dcddde;font-weight:700;margin-bottom:6px">Join REBEL SMP Discord</div>'
+    +'<div style="color:#555;font-size:.74rem;margin-bottom:14px;max-width:220px;line-height:1.5">'+esc(msg||'')+'</div>'
+    +'<a href="'+esc(DISCORD_INVITE_URL)+'" target="_blank" style="display:inline-block;background:#5865f2;color:#fff;padding:9px 20px;border-radius:6px;font-size:.8rem;font-weight:700;letter-spacing:1px">JOIN DISCORD →</a>'
+    +'</div>';
+}
+fetchDiscord();
+setInterval(fetchDiscord, 30000);
+</script>
+</body>
+</html>
